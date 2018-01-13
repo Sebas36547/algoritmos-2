@@ -1,0 +1,107 @@
+#include <iostream>
+#include "conio.h"
+#define fil 50
+#define col 50
+void mostrar_matriz(int mat[fil][col],int fi,int co);
+void caracol(int mat[fil][col],int f,int c);
+int valor();
+void mas_derecha(int mat[fil][col],int i,int r,int fijo, int &elem, int fin);
+void mas_abajo(int mat[fil][col],int i,int r,int fijo, int &elem, int fin);
+void menos_izquierda(int mat[fil][col],int i,int r,int fijo, int &elem, int fin);
+void menos_arriba(int mat[fil][col],int i,int r,int fijo, int &elem, int fin);
+using namespace std;
+void main()
+{
+int matriz[fil][col],fila,columna;
+	cout<<"Cargar matriz espiral"<<endl;		
+	cout<<"Ingrese tamaño de fila: ";
+		cin>>fila;
+	cout<<"Ingrese tamaño de columna: ";
+		cin>>columna;
+	caracol(matriz,fila,columna);
+	mostrar_matriz(matriz,fila,columna);		
+	getch();
+}
+void mostrar_matriz(int mat[fil][col],int fi,int co)
+{
+	for(int i=0;i<fi;i++)
+	{
+		for(int j=0;j<co;j++)
+		{
+			if(mat[i][j]<10){
+				cout<<" ";}
+			cout<<mat[i][j]<<"  ";
+		}
+		cout<<endl;
+	}
+}
+void caracol(int mat[fil][col],int f,int c)
+{
+	for(int i=0;i<f;i++)
+	{
+		for(int j=0;j<c;j++)
+		{
+			mat[i][j]=0;
+		}
+	}
+int z=f*c,elementos=0,u=c,i=0,mov=0,l=0;
+	while(elementos<z)
+	{
+		mas_derecha		(mat,0+l,c,i+l,elementos,z);
+		mas_abajo		(mat,1-l,f,(u-1)-l,elementos,z);
+		menos_izquierda	(mat,(c-2)-l,-1,(f-1)-l,elementos,z);
+		menos_arriba	(mat,(f-2)+l,i,i+l,elementos,z);
+		l++;
+	}
+}
+void mas_derecha(int mat[fil][col],int i,int r,int fijo, int &elem, int fin)
+{
+	for(int j=i;j<r;j++)
+	{
+		if((elem<= fin)&&(mat[fijo][j]==0))
+		{
+			mat[fijo][j]=valor();
+			elem++;
+		}
+	}
+}
+void mas_abajo(int mat[fil][col],int i,int r,int fijo, int &elem, int fin)
+{
+	for(int j=i;j<r;j++)
+	{
+		if((elem<= fin)&&(mat[j][fijo]==0))
+		{
+			mat[j][fijo]=valor();
+			elem++;
+		}
+	}
+}
+void menos_izquierda(int mat[fil][col],int i,int r,int fijo, int &elem, int fin)
+{
+	for(int j=i;j>r;j--)
+	{
+		if((elem<= fin)&&(mat[fijo][j]==0))
+		{
+			mat[fijo][j]=valor();
+			elem++;
+		}
+	}
+}
+void menos_arriba(int mat[fil][col],int i,int r,int fijo, int &elem, int fin)
+{
+	for(int j=i;j>r;j--)
+	{
+		if((elem<= fin)&&(mat[j][fijo]==0))
+		{
+			mat[j][fijo]=valor();
+			elem++;
+		}
+	}
+}
+int valor()
+{
+	int x;
+	cout<<"ingrese el valor: ";
+		cin>>x;
+	return x;
+}
